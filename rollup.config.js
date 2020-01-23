@@ -1,5 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
+//import { terser } from "rollup-plugin-terser";
+import autoPreprocess from 'svelte-preprocess';
 import pkg from './package.json';
 
 const name = pkg.name
@@ -11,10 +13,15 @@ export default {
 	input: 'src/index.js',
 	output: [
 		{ file: pkg.module, 'format': 'es' },
-		{ file: pkg.main, 'format': 'umd', name }
+		{ file: pkg.main, 'format': 'umd', name },
+		{ file: pkg.component, format: "iife", name }
 	],
 	plugins: [
-		svelte(),
+		svelte(
+		      customElement: true,
+
+		      preprocess: autoPreprocess()
+		),
 		resolve()
 	]
 };
