@@ -1,6 +1,6 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
-//import { terser } from "rollup-plugin-terser";
+import { terser } from "rollup-plugin-terser";
 import autoPreprocess from 'svelte-preprocess';
 import pkg from './package.json';
 
@@ -17,11 +17,11 @@ export default {
 		{ file: pkg.component, format: "iife", name }
 	],
 	plugins: [
-		svelte(
-		      customElement: true,
-
-		      preprocess: autoPreprocess()
-		),
-		resolve()
+		svelte({
+			customElement: true,
+			preprocess: autoPreprocess()
+		}),
+		resolve(),
+		terser()
 	]
 };
